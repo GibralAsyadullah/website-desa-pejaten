@@ -6,8 +6,8 @@
       <p>Ringkasan data resmi {{ $profile?->nama_desa }} untuk keperluan administrasi, penelitian, dan transparansi publik.</p>
     </div>
     <div class="datadesa-grid">
-      @forelse($dataDesa as $data)
-      <div class="dd-card reveal"><div class="dd-icon">{{ $data->icon }}</div><h4>{{ $data->judul }}</h4><p>{{ $data->deskripsi }}</p><a class="dd-link" href="{{ $data->link }}">Lihat detail →</a></div>
+      @forelse($dataDesa as $d)
+      <div class="dd-card reveal"><div class="dd-icon">{{ $d->icon }}</div><h4>{{ $d->judul }}</h4><p>{{ $d->deskripsi }}</p><a class="dd-link" href="{{ $d->link }}">Lihat detail →</a></div>
       @empty
       @endforelse
     </div>

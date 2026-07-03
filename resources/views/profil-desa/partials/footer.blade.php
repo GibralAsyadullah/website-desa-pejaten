@@ -3,7 +3,7 @@
     <div class="foot-grid">
       <div>
         <h3>{{ $profile?->nama_desa }}</h3>
-        <p>Kantor {{ $profile?->nama_desa }}, Kecamatan {{ $profile?->kecamatan }}, Kabupaten {{ $profile?->kabupaten }}, Provinsi {{ $profile?->provinsi }}, Kode Pos {{ $profile?->kode_pos }}.</p>
+        <p>{{ $profile?->alamat_kantor }}, {{ $profile?->kode_pos }}</p>
         <div class="foot-social">
           @if($profile?->sosial_media['facebook'])
           <a href="{{ $profile->sosial_media['facebook'] }}" title="Facebook">FB</a>

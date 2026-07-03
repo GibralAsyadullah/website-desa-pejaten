@@ -29,6 +29,8 @@
       <a href="#tim-kkn">Tim KKN</a>
       <a href="#program-kelompok">Program Kelompok</a>
       <a href="#program-individu">Program Individu</a>
+      <a href="#dokumentasi-kkn">Dokumentasi</a>
+      <a href="#artikel-kkn">Artikel</a>
       <a href="#luaran-kkn">Luaran</a>
     </div>
 
@@ -41,7 +43,7 @@
       </div>
       <div class="tim-grid">
         @forelse($kknMembers as $member)
-        <div class="tim-card reveal"><div class="tim-photo">{{ substr($member->nama, 0, 2) }}</div><div class="tim-body"><div class="t-name">{{ $member->nama }}</div><div class="t-role">{{ $member->peran }}</div></div></div>
+        <div class="tim-card reveal"><div class="tim-photo">{{ substr($member->nama, 0, 2) }}</div><div class="tim-body"><div class="t-name">{{ $member->nama }}</div><div class="t-role">{{ $member->peran }}{{ $member->prodi ? ' - ' . $member->prodi : '' }}</div></div></div>
         @empty
         @endforelse
       </div>
@@ -62,7 +64,7 @@
           <div class="tl-card">
             <h4>{{ $timeline->judul }}</h4>
             <ul>
-              @foreach($timeline->items as $item)
+              @foreach($timeline->items ?? [] as $item)
               <li>{{ $item->keterangan }}</li>
               @endforeach
             </ul>
@@ -81,12 +83,52 @@
         <p>Program kerja individu mahasiswa berdasarkan program studi masing-masing.</p>
       </div>
       <div class="proker-grid" id="prokerGrid">
-        @forelse($kknIndividual as $proki)
-        <div class="proker-card reveal">
-          <div class="proker-top"><span class="proker-prodi">{{ $proki->studyProgram->nama }}</span><span class="proker-status {{ $proki->status }}">{{ ucfirst($proki->status) }}</span></div>
-          <h4>{{ $proki->judul }}</h4>
-          <p class="proker-nama">{{ $proki->nama_mahasiswa }}</p>
-          <p>{{ $proki->deskripsi }}</p>
+        @forelse($kknIndividual as $program)
+        <div class="proker-card reveal" data-prodi="{{ $program->studyProgram->kode ?? 'all' }}">
+          <div class="proker-top">
+            <span class="proker-prodi">{{ $program->studyProgram->nama ?? 'N/A' }}</span>
+            <span class="proker-status {{ $program->status }}">{{ ucfirst($program->status) }}</span>
+          </div>
+          <h4>{{ $program->judul }}</h4>
+          <p class="proker-nama">{{ $program->nama_mahasiswa }}</p>
+          <p>{{ $program->deskripsi }}</p>
+        </div>
+        @empty
+        @endforelse
+      </div>
+    </div>
+
+    <!-- DOKUMENTASI -->
+    <div id="dokumentasi-kkn" style="margin-bottom:72px; scroll-margin-top:110px;">
+      <div class="section-head reveal">
+        <span class="label">Jejak Kegiatan</span>
+        <h2 style="font-size:1.5rem;">Dokumentasi Kegiatan KKN</h2>
+        <p>Dokumentasi foto dan video kegiatan mahasiswa KKN UBP Karawang 2026 di {{ $profile?->nama_desa }}.</p>
+      </div>
+      <div class="masonry">
+        @forelse($galeriKkn as $g)
+        <div class="masonry-item reveal"><div class="mi-fill">{{ $g->judul }}</div><div class="mi-cap">{{ $g->judul }}</div></div>
+        @empty
+        @endforelse
+      </div>
+    </div>
+
+    <!-- ARTIKEL KKN -->
+    <div id="artikel-kkn" style="margin-bottom:72px; scroll-margin-top:110px;">
+      <div class="section-head reveal">
+        <span class="label">Publikasi</span>
+        <h2 style="font-size:1.5rem;">Artikel KKN</h2>
+        <p>Tulisan dan liputan seputar pelaksanaan {{ $kknPeriod->nama }} di {{ $profile?->nama_desa }}.</p>
+      </div>
+      <div class="berita-grid">
+        @forelse($kknArtikel as $artikel)
+        <div class="berita-card reveal">
+          <div class="berita-thumb">{{ $artikel->judul }}</div>
+          <div class="berita-body">
+            <span class="berita-date">{{ $artikel->tanggal_publish->format('d M Y') }}</span>
+            <h4>{{ $artikel->judul }}</h4>
+            <p>{{ Str::limit($artikel->ringkasan, 100) }}</p>
+          </div>
         </div>
         @empty
         @endforelse
@@ -101,12 +143,13 @@
         <p>Produk dan hasil nyata yang diserahkan kepada Pemerintah {{ $profile?->nama_desa }} agar dapat dimanfaatkan berkelanjutan.</p>
       </div>
       <div class="luaran-grid">
-        @forelse($kknOutput as $luaran)
-        <div class="luaran-card reveal"><div class="lc-icon">{{ $luaran->icon }}</div><h5>{{ $luaran->judul }}</h5><p>{{ $luaran->deskripsi }}</p></div>
+        @forelse($kknOutput as $output)
+        <div class="luaran-card reveal"><div class="lc-icon">{{ $output->icon }}</div><h5>{{ $output->judul }}</h5><p>{{ $output->deskripsi }}</p></div>
         @empty
         @endforelse
       </div>
     </div>
     @endif
+
   </div>
 </section>

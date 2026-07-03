@@ -6,7 +6,7 @@
       <p>Kumpulan foto kegiatan warga, pemerintahan desa, dan program KKN UBP Karawang 2026.</p>
     </div>
     <div class="masonry">
-      @forelse($galeriUmum->merge($galeriKkn) as $g)
+      @forelse($galeriUmum as $g)
       <div class="masonry-item reveal"><div class="mi-fill">{{ $g->judul }}</div><div class="mi-cap">{{ $g->judul }}</div></div>
       @empty
       @endforelse
